@@ -1,6 +1,6 @@
 import os
 from datetime import datetime
-from gemini_api import generate_newsletter
+from gemini_api import get_gemini_response
 
 # ✅ File Paths
 NEWS_DIR = "news_data"
