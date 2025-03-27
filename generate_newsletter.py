@@ -17,6 +17,9 @@ if not os.path.exists(NEWS_FILE):
     print("❌ No news file found! Fetching news first...")
     os.system("python headline-6.py")
 
+# ✅ Get API key from GitHub Secrets
+API_KEY = os.getenv("GEMINI_API_KEY")
+
 # ✅ Read news content
 with open(NEWS_FILE, "r", encoding="utf-8") as file:
     news_content = file.read()
