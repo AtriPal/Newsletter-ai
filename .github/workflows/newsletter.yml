@@ -33,9 +33,12 @@ jobs:
         run: python generate_newsletter.py  # This reads latest_news.txt and creates Generated_Newsletter.txt
 
       - name: Commit and push generated newsletter
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
         run: |
           git config --global user.name "GitHub Actions Bot"
           git config --global user.email "github-actions@github.com"
+          git remote set-url origin https://x-access-token:${GH_PAT}@github.com/AtriPal/Newsletter-ai.git
           git add news_data/
           git commit -m "Automated newsletter update" || echo "No changes to commit"
-          git push
+          git push origin main
