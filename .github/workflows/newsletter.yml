@@ -20,20 +20,22 @@ jobs:
 
       - name: Install dependencies
         run: |
-          python -m venv news_env
-          source news_env/bin/activate
+          python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Set up API key
+        run: echo "GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}" >> $GITHUB_ENV
+
       - name: Run the newsletter script
-        run: |
-          source news_env/bin/activate
-          python headline-6.py
-          python generate_newsletter.py
+        run: python headline-6.py
+
+      - name: Generate newsletter
+        run: python generate_newsletter.py
 
       - name: Commit and push generated newsletter
         run: |
           git config --global user.name "GitHub Actions Bot"
           git config --global user.email "github-actions@github.com"
           git add .
-          git commit -m "Automated newsletter update"
+          git commit -m "Automated newsletter update" || echo "No changes to commit"
           git push
