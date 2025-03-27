@@ -1,0 +1,4 @@
+google-generativeai
+feedparser
+beautifulsoup4
+requests
