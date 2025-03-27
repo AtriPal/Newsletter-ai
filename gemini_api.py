@@ -17,3 +17,9 @@ def get_gemini_response(news_text, prompt_template):
     model = genai.GenerativeModel('gemini-pro')
     response = model.generate_content(prompt)
     return response.text
+
+def generate_newsletter(news_text, prompt_template):
+    """
+    Wrapper function to call the Gemini API and generate the newsletter.
+    """
+    return get_gemini_response(news_text, prompt_template)
