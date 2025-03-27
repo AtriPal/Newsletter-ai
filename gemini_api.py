@@ -14,7 +14,7 @@ def get_gemini_response(news_text, prompt_template):
     Sends a prompt to Gemini API and returns the response.
     """
     prompt = prompt_template.format(news_text=news_text)
-    model = genai.GenerativeModel('gemini-pro')
+    model = genai.GenerativeModel('gemini-1.5-pro')
     response = model.generate_content(prompt)
     return response.text
 
