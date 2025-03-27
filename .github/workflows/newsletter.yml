@@ -2,7 +2,7 @@ name: Generate Newsletter
 
 on:
   schedule:
-    - cron: '0 6 * * *'  # Runs daily at 6 AM UTC (adjust as needed)
+    - cron: '0 6 * * *'  # Runs daily at 6 AM UTC
   workflow_dispatch:      # Allows manual execution
 
 jobs:
@@ -26,16 +26,16 @@ jobs:
       - name: Set up API key
         run: echo "GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}" >> $GITHUB_ENV
 
-      - name: Run the newsletter script
-        run: python headline-6.py
+      - name: Run the news headline script
+        run: python headline-6.py  # This should create latest_news.txt
 
       - name: Generate newsletter
-        run: python generate_newsletter.py
+        run: python generate_newsletter.py  # This reads latest_news.txt and creates Generated_Newsletter.txt
 
       - name: Commit and push generated newsletter
         run: |
           git config --global user.name "GitHub Actions Bot"
           git config --global user.email "github-actions@github.com"
-          git add .
+          git add news_data/
           git commit -m "Automated newsletter update" || echo "No changes to commit"
           git push
