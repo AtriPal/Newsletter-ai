@@ -27,16 +27,18 @@ jobs:
         run: echo "GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}" >> $GITHUB_ENV
 
       - name: Run the news headline script
-        run: python headline-6.py  # This should create the news file
+        run: python headline-6.py  # This creates the news file
 
       - name: Generate newsletter
         run: python generate_newsletter.py  # This reads the news file and creates the newsletter
 
       - name: Commit and push generated newsletter
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
         run: |
           git config --global user.name "GitHub Actions Bot"
           git config --global user.email "github-actions@github.com"
-          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/AtriPal/Newsletter-ai.git
+          git remote set-url origin https://x-access-token:${GH_PAT}@github.com/AtriPal/Newsletter-ai.git
           git add news_data/
           git commit -m "Automated newsletter update" || echo "No changes to commit"
           git push origin main
